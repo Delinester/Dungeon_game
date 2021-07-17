@@ -80,9 +80,10 @@ EnemyStats trap{ "Острый камень", TRAP_DEATH, 0, 0 }; //Condition of death cause
 
 //Weapon stats
 WeaponStats crossbow{ "Арбалет", CROSSBOW, 50, 3, 1, 1};
-WeaponStats knives{ "Кинжалы", KNIVES, 15, 2, 1, 2};
+WeaponStats knives{ "Кинжалы", KNIVES, 10, 2, 1, 2};
 WeaponStats sword{ "Меч", SWORD, 15, 1, 1, 1};
 
-
+//AdditionalStuff
+std::string empty;
 
 
