@@ -2,6 +2,12 @@
 #include <cstdlib>
 #include <ctime>
 #include "ItemsAndStats.h"
+
+//#include <random>
+//int randomizer(int max, int min) {
+//	std::random_device rd;
+//	return min + rd() % (max - min + 1);
+//}//ТЕСТОВЫЙ ГЕНЕРАТОР СЛУЧАЙНЫХ ЧИСЕЛ 
 void roomCreate();
 int randomizer(int max, int min) {
 	return min + (rand() % ((max - min) + 1));
@@ -10,11 +16,10 @@ void playerDeath(EnemyStats enemy, int roomNumber) {
 	system("CLS");
 	std::cout << enemy.name << " убил храброго героя " << player.name << std::endl;	
 	std::cout << "В его кошельке оказалось " << player.coins << " монет" << std::endl;
-	std::cout << "Теперь в комнате " << roomNumber << " лежит бездыханное тело..." << std::endl;
-	std::cout << "*Нажмите Enter(иногда дважды) для завершения игры*";
-	std::cin.clear(); std::cin.get();
+	std::cout << "Теперь в комнате " << roomNumber << " лежит бездыханное тело..." << std::endl;	
+	system("Pause"); std::cout << std::endl;
 	exit(0);
-}//ДОРАБОТАТЬ ЗАВЕРШЕНИЕ ИГРЫ
+}
 short playerGiveDamage(void) {
 	short addDamage = ((static_cast<float>(player.weapon.baseDamage) / 100) * Constants::damagePercentsRange);
 	switch (player.weapon.type) {
@@ -65,18 +70,16 @@ void enemyDrop(std::string monsterName) {
 		break;
 	}
 	std::cout << std::endl;
-	std::cout << "-----------------------------------------\n";
-	std::cout << "*Нажмите Enter(иногда дважды) для продолжения*";
-	std::cin.get(); std::cin.get();
+	std::cout << "-----------------------------------------\n";	
+	system("Pause"); std::cout << std::endl;
 	roomCreate();
 }
 void enemyBattle(EnemyStats enemy, int roomNumber) {
 	short addEnemyHealth = (static_cast<float>(enemy.hp) / 100) * Constants::healthPercentsRange;
 	enemy.hp += randomizer(addEnemyHealth, -addEnemyHealth);
 	std::cout << enemy.name << " имеет " << enemy.hp << " очков здоровья.\n";
-	std::cout << player.name << " имеет " << player.hp << " очков здоровья.\n";
-	std::cout << "*Нажмите Enter(иногда дважды) для продолжения*";
-	std::cin.get(); std::cin.get();
+	std::cout << player.name << " имеет " << player.hp << " очков здоровья.\n\n";	
+	system("Pause"); std::cout << std::endl;
 	FirstAttack firstAttack = static_cast<FirstAttack>(randomizer(2, 1));
 	switch (firstAttack) {
 	case ENEMY:
@@ -90,17 +93,15 @@ void enemyBattle(EnemyStats enemy, int roomNumber) {
 			std::cout << "-----------------------------------------\n";
 			std::cout << "У героя " << player.hp << " очков здоровья\n";
 			std::cout << "У врага " << enemy.hp << " очков здоровья\n";
-			std::cout << "-----------------------------------------\n";
-			std::cout << "*Нажмите Enter(иногда дважды) для продолжения*\n\n";
-			std::cin.get(); std::cin.get();
+			std::cout << "-----------------------------------------\n\n";			
+			system("Pause"); std::cout << std::endl;
 			int dealDamage = playerGiveDamage();
 			enemy.hp -= dealDamage;
 			std::cout << "Ловко используя " << player.weapon.name << ", Вы нанесли " << dealDamage
 				<< " урона врагу " << enemy.name << std::endl;
 			if (enemy.hp <= 0) {
-				std::cout << "Вы победили врага " << enemy.name << std::endl;
-				std::cout << "*Нажмите Enter(иногда дважды) для продолжения*";
-				std::cin.get(); std::cin.get();
+				std::cout << "Вы победили врага " << enemy.name << std::endl << std::endl;
+				system("Pause"); std::cout << std::endl; 
 				enemyDrop(enemy.name);
 			}
 			dealDamage = enemyGiveDamage(enemy.baseDamage);
@@ -121,9 +122,8 @@ void enemyBattle(EnemyStats enemy, int roomNumber) {
 			std::cout << "-----------------------------------------\n";
 			std::cout << "У врага " << enemy.hp << " очков здоровья\n";
 			std::cout << "У героя " << player.hp << " очков здоровья\n";
-			std::cout << "-----------------------------------------\n";
-			std::cout << "*Нажмите Enter(иногда дважды) для продолжения*\n\n";
-			std::cin.get(); std::cin.get();
+			std::cout << "-----------------------------------------\n\n";			
+			system("Pause"); std::cout << std::endl; 
 			int dealDamage = enemyGiveDamage(enemy.baseDamage);
 			player.hp -= dealDamage;
 			std::cout << enemy.name << " яростно замахивается и наносит " << dealDamage << " урона герою "
@@ -134,9 +134,8 @@ void enemyBattle(EnemyStats enemy, int roomNumber) {
 			std::cout << "Ловко используя " << player.weapon.name << ", Вы нанесли " << dealDamage
 				<< " урона врагу " << enemy.name << std::endl;
 			if (enemy.hp <= 0) {
-				std::cout << "Вы победили врага " << enemy.name << std::endl;
-				std::cout << "*Нажмите Enter(иногда дважды) для продолжения*";
-				std::cin.get(); std::cin.get();
+				std::cout << "Вы победили врага " << enemy.name << std::endl;				
+				system("Pause"); std::cout << std::endl;
 				enemyDrop(enemy.name);
 			}
 
@@ -181,9 +180,8 @@ void enemyPrint(EnemyStats enemy, int roomNumber) {
 		 std::cout << "К Вам приближается РЫЦАРЬ, одетый в латные доспехи! По его виду можно сказать, что он безумен\n";
 		 std::cout << "Приготовьтесь, схватка между Вами будет не на жизнь, а на смерть\n\n";
 		 break;
-	}
-	std::cout << "*Нажмите Enter(иногда дважды) для того, чтобы начать битву*\n\n";
-	std::cin.get(); std::cin.get();
+	}	
+	system("Pause"); std::cout << std::endl; 
 	enemyBattle(enemy, roomNumber);
 }
 EnemyStats enemySpawn() {
@@ -221,18 +219,16 @@ void roomCreate(){
 	case COINS:
 		player.coins += randomizer(Constants::maxConinsPerRoom, Constants::minCoinsPerRoom);
 		std::cout << "Вы входите в освещенную комнату, посередине которой стоит сундук...\n";
-		std::cout << "Вы нашли сокровище! Теперь Ваш баланс равен " << player.coins << std::endl << std::endl;
-		std::cout << "Нажмите Enter(иногда дважды), чтобы продолжить исследование...";
-		std::cin.clear(); std::cin.get();
+		std::cout << "Вы нашли сокровище! Теперь Ваш баланс равен " << player.coins << std::endl << std::endl;		
+		system("Pause"); std::cout << std::endl;
 		roomCreate();
 		break;
 	case HEAL_POTION:
 		player.hp += randomizer(Constants::maxHeal, Constants::minHeal);
 		std::cout << "Вы входите в освещенную комнату, посередине которой стоит сундук...\n";
 		std::cout << "Вы нашли бутылек с лекарством! Вам стало лучше, здоровье увеличилось до "
-			<< player.hp << " очков." << std::endl << std::endl;
-		std::cout << "Нажмите Enter(иногда дважды), чтобы продолжить исследование...";
-		std::cin.clear(); std::cin.get();
+			<< player.hp << " очков." << std::endl << std::endl;		
+		system("Pause"); std::cout << std::endl;
 		roomCreate();
 		break;
 	}
@@ -243,9 +239,8 @@ void roomCreate(){
 	    std::cout << "Бродя по мрачным и сырым коридорам, Вы случайно наступаете на нажимную плиту.\n";
 		std::cout << "Вдалеке слышен скрежет механизмов.\nВнезапно из щели в стене в Вас вонзается что-то острое.\n";
 		std::cout << "Вы чувствуете себя хуже. Ваш запас здоровья снизился до " << player.hp << " очков\n\n";
-		if (player.hp <= 0) playerDeath(trap, roomNumber);
-		std::cout << "Нажмите Enter(иногда дважды), чтобы продолжить исследование...";
-		std::cin.clear(); std::cin.get();
+		if (player.hp <= 0) playerDeath(trap, roomNumber);		
+		system("Pause"); std::cout << std::endl;
 		roomCreate();
 		break;
 	}
@@ -282,6 +277,10 @@ void gameStart() {
 		cout <<	"2 - Кинжалы(Низкий урон. Двойной удар. Шанс попадания 50 процентов каждый)\n";
 		cout <<	"3 - Меч(Низкий урон. Шанс попадания 100 процентов)\n Введите номер оружия: ";
 		cin >> weaponNum;
+		if (cin.fail()) {
+			cin.clear();
+			cin.ignore(100, '\n');
+		}
 	} while (weaponNum > 3 || weaponNum < 1);
 	player.weapon.type = static_cast<Weapon>(weaponNum);
 	definePlayerWeapon(player.weapon.type);
@@ -289,8 +288,8 @@ void gameStart() {
 	player.hp = randomizer(Constants::maxPlayerHealth, Constants::basePlayerHealth);
 	cout << "Итак, " << player.name << ", у Вас в руках " << player.weapon.name <<
 		". Вы полны сил, у Вас " << player.hp << " очков здоровья\n";
-	cout << "Взяв волю в кулак, Вы входите в темную крипту...\n\nНажмите Enter(иногда дважды) для старта\n";
-	cin.get(); cin.get();
+	cout << "Взяв волю в кулак, Вы входите в темную крипту...\n\n";
+	system("Pause"); std::cout << std::endl;
 	roomCreate();
 }
 
