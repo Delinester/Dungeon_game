@@ -1,7 +1,6 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-
 #include "ItemsAndStats.h"
 
 //#include <random>
